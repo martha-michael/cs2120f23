@@ -1,0 +1,14 @@
+
+
+-- α means alpha
+def id_poly : (α : Type) → α → α 
+-- takes a string and value of String
+| α, v => v
+
+
+
+
+
+
+
+
