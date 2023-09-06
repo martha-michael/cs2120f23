@@ -489,8 +489,8 @@ Boolean inputs and returns the "conjunction"
 Which of the preceding results?
 `-/
 
-
-
+def mystery : Bool -> Bool -> Bool
+| b1, b2 => and (not b1) (not b2)
 
 /-!
 ## Pattern matching

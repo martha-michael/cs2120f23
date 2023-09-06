@@ -1,0 +1,8 @@
+def id_nat : Nat → Nat
+| n => n
+
+def id_string : String → String
+| n => n
+
+def id_bool : Bool → Bool
+| n => n
