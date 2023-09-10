@@ -1,0 +1,25 @@
+
+/-!
+These are tips incase git pull upstream doesn't work
+
+--When you get an message:
+"You have not concluded your merge (MERGE_HEAD exists)
+
+then type 
+git merge --abort
+git reset --merge
+git status
+
+see if your main branch is up-to-date
+git pull upstream main
+
+--When you get the message: 
+"Your local changes to the following files would be overwritten by merge: something something
+
+then type 
+git reset --hard
+git pull 
+
+see if your main main branch is up-to-date
+git pull upstream main
+-/
