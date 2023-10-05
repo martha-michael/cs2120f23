@@ -1,5 +1,7 @@
-/-!
+/-
 # Propositional Logic
+
+UNDER CONSTRUCTION (REALLY)
 
 We've now built enough machinery and intuition for basic
 logic that not only we can introduce it informally, in the
@@ -78,6 +80,12 @@ some examples of atomic propositions:
 - It's raining
 - The ground is wet
 - x * y = 1
+-- *to find out if a sentence is a propositional if you begin the statement with 
+Is it true that*
+  - EX: "IS IT TRUE THAT" hello!      -not atomic proposition
+  - EX: "IS IT TRUE THAT" it's raining    -atomic proposition
+  - EX: "IS IT TRUE THAT" get out!    -not atomic proposition
+
 
 Because atomic propositions don't break up into smaller
 elements, and to make it easier to read and write 
@@ -126,9 +134,6 @@ That's it! Here then are some valid expressions in
 propositional logic:
 - {a}           -- it's raining
 - {b}           -- the ground is wet
-
-
--- Now assume that a and b are any expressions
 - ¬a            -- it's not raining
 - a ⇒ b         -- if it's raining then the ground is wet
 - a ∨ b         -- it's raining or the ground is wet
@@ -188,6 +193,7 @@ side lists values of expressions. Second, note that that
 there are two interpretations for the one input variable,
 *a*. 
 
+|variable |expression |
 | a       |   ¬{a}    |
 |---------|-----------|
 | true    |  false    |
@@ -198,6 +204,8 @@ of interpretations is determined only by the number of
 variables that have to be given values to determine the
 value of the output expression.
 
+
+|variable |   expression  |
 | a       |   {a} ∨ ¬{a}  |
 |---------|---------------|
 | true    |      true     |
@@ -344,9 +352,10 @@ inductive binary_op : Type
 -/
 
 inductive Expr : Type
-| var_exp (v : var)
-| un_exp (op : unary_op) (e : Expr)
+| var_exp (v : var)         --gets a variable and turns it into an expression
+| un_exp (op : unary_op) (e : Expr)   --unary op before any expression (e: Expr) to get an expression
 | bin_exp (op : binary_op) (e1 e2 : Expr)
+
 
 open Expr
 
@@ -357,7 +366,7 @@ def s2 := un_exp unary_op.not s0
 def s3 := un_exp unary_op.not s1
 def s4 := bin_exp binary_op.and s0 s3
 def s5 := bin_exp binary_op.or s0 s3
-def s6 := bin_exp binary_op.or s4 s5
+def s6 := bin_exp binary_op.or s4 s5  -- s4 and s5 are variables and bin_exp and binary_op are expressions
 
 /-!
 #### Notations
@@ -388,8 +397,8 @@ to the same idea in arithmetic, which states
 that * applies before +, for example. 
 -/
 
-notation "{"v"}" => var_exp v
-prefix:max "¬" => un_exp unary_op.not 
+notation "{"v"}" => var_exp v -- "v" is a variable and turns into the expression {"v"}
+prefix:max "¬" => un_exp unary_op.not --not goes before the argument which makes it a prefix notation 
 infixr:35 " ∧ " => bin_exp binary_op.and  
 infixr:30 " ∨ " => bin_exp binary_op.or 
 infixr:25 " ⇒ " =>  bin_exp binary_op.imp
@@ -400,7 +409,7 @@ def e0 := {v₀}
 def e1 := ¬e0
 def e2 := e0 ∧ e1
 def e3 := e0 ∨ e1
-def e4 := (e2 ∧ e3) ∨ e0
+def e4 := (e2 ∧ e3) ∨ e0  --() is not needed because binding strength of ∧ is greater than ∨
 
 
 /-!
@@ -467,9 +476,9 @@ argument.
 -/
 
 def eval_expr : Expr → Interp → Bool 
-| (var_exp v), i => i v
-| (un_exp op e), i => (eval_un_op op) (eval_expr e i)
-| (bin_exp op e1 e2), i => (eval_bin_op op) (eval_expr e1 i) (eval_expr e2 i)
+| var_exp v, i => i v          --intepretation i is applied to v to give the boolean value 
+| un_exp op e, i => (eval_un_op op) (eval_expr e i)  --
+| bin_exp op e1 e2, i => (eval_bin_op op) (eval_expr e1 i) (eval_expr e2 i)
 
 /-!
 #### Demonstration
@@ -488,11 +497,12 @@ def eval_expr : Expr → Interp → Bool
 #eval eval_expr e4 all_false
 
 /-!
-You have now implemented the abstract syntax and 
+## Conclusion
+
+You have implemented the abstract syntax and 
 standard concrete syntax for, and the semantics 
 of, the formal language of propositional logic.
 You have also automated the semantic evaluation
 of variables, operators, and arbitrarily complex
 expressions in propositional logic. That's cool! 
 -/
-
